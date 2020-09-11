@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:meals_app/screens/category_meals_screen.dart';
+import 'package:meals_app/screens/filter_screen.dart';
 import 'package:meals_app/screens/meals_details_screen.dart';
-
 import 'screens/bottom_navigation_screen.dart';
 
 void main() {
@@ -20,7 +20,10 @@ class MyApp extends StatelessWidget {
           canvasColor: Color.fromRGBO(255, 254, 229, 1),
           // errorColor: Colors.red,
           fontFamily: 'Quicksand',
-          textTheme: ThemeData.light().textTheme.copyWith(
+          textTheme: ThemeData
+              .light()
+              .textTheme
+              .copyWith(
               body1: TextStyle(
                 fontFamily: 'Raleway',
                 color: Color.fromRGBO(20, 51, 51, 1),
@@ -35,13 +38,16 @@ class MyApp extends StatelessWidget {
                   fontFamily: 'RobotoCondensed',
                   fontWeight: FontWeight.bold)),
           appBarTheme: AppBarTheme(
-            textTheme: ThemeData.light().textTheme.copyWith(
-                  title: TextStyle(
-                    fontFamily: 'OpenSans',
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+            textTheme: ThemeData
+                .light()
+                .textTheme
+                .copyWith(
+              title: TextStyle(
+                fontFamily: 'OpenSans',
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           )),
       //home: CategoriesScreen(),
       initialRoute: '/',
@@ -49,7 +55,8 @@ class MyApp extends StatelessWidget {
         //'/': (ctx) => TabScreen(),
         '/': (ctx) => BottomNavigation(),
         CategoryMealsScreen.routName: (ctx) => CategoryMealsScreen(),
-        MealDetailsScreen.routName: (ctx) => MealDetailsScreen()
+        MealDetailsScreen.routName: (ctx) => MealDetailsScreen(),
+        FilterScreen.routName: (ctx) => FilterScreen()
       },
     );
   }
