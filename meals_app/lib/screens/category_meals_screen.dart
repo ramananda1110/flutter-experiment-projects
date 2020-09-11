@@ -16,6 +16,7 @@ class CategoryMealsScreen extends StatelessWidget {
 
     final catTitle = routeArg['title'];
     final catId = routeArg['id'];
+
     final categoryMeals = DUMMY_MEALS.where((element) {
       return element.categories.contains(catId);
     }).toList();
