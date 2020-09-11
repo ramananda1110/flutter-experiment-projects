@@ -19,8 +19,7 @@ class MealItem extends StatelessWidget {
       this.affordability});
 
   void selectMeal(BuildContext ctx) {
-    Navigator.of(ctx).pushNamed(MealDetailsScreen.routName,
-        arguments: {'id': id, 'title': title});
+    Navigator.of(ctx).pushNamed(MealDetailsScreen.routName, arguments: id);
   }
 
   String get complexityText {
@@ -74,7 +73,7 @@ class MealItem extends StatelessWidget {
                   ),
                 ),
                 Positioned(
-                  bottom: 20,
+                  bottom: 10,
                   right: 10,
                   child: Container(
                     width: 300,
@@ -82,7 +81,7 @@ class MealItem extends StatelessWidget {
                     padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                     child: Text(
                       title,
-                      style: TextStyle(fontSize: 24, color: Colors.white),
+                      style: TextStyle(fontSize: 20, color: Colors.white),
                       softWrap: true,
                       overflow: TextOverflow.fade,
                     ),
