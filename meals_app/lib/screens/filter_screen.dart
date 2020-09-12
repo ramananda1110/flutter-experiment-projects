@@ -1,20 +1,77 @@
 import 'package:flutter/material.dart';
 import 'package:meals_app/dummy_data.dart';
 
-class FilterScreen extends StatelessWidget {
+class FilterScreen extends StatefulWidget {
   static const routName = './meals-filter-screen';
 
   @override
-  Widget build(BuildContext context) {
+  _FilterScreenState createState() => _FilterScreenState();
+}
 
+class _FilterScreenState extends State<FilterScreen> {
+  bool _glutenFree = false;
+  bool _vegetarian = false;
+  bool _vegan = false;
+  bool _lactoseFree = false;
+
+  Widget buildSwitchListTitle(String title, String description,
+      bool currentValue, Function updateValue) {
+    return SwitchListTile(
+      value: currentValue,
+      subtitle: Text(description),
+      onChanged: updateValue,
+      title: Text(title),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           title: Text('Filter'),
         ),
-        body: Center(
-          child: Container(
-            child: Text('Filter screen'),
-          ),
+        body: Column(
+          children: [
+            Container(
+              padding: EdgeInsets.all(12),
+              child: Text(
+                'Adjust your meal selection.',
+                style: Theme.of(context).textTheme.title,
+              ),
+            ),
+            Expanded(
+                child: ListView(
+              children: [
+                buildSwitchListTitle('Gluten free',
+                    'Only include gluten free meals', _glutenFree, (newValue) {
+                  setState(() {
+                    _glutenFree = newValue;
+                  });
+                }),
+                buildSwitchListTitle(
+                    'Lactose free',
+                    'Only include lactose free meals',
+                    _lactoseFree, (newValue) {
+                  setState(() {
+                    _lactoseFree = newValue;
+                  });
+                }),
+                buildSwitchListTitle(
+                    'Vegetarian', 'Only include vegetarian  meals', _vegetarian,
+                    (newValue) {
+                  setState(() {
+                    _vegetarian = newValue;
+                  });
+                }),
+                buildSwitchListTitle(
+                    'Vegan', 'Only include vegan  meals', _vegan, (newValue) {
+                  setState(() {
+                    _vegan = newValue;
+                  });
+                })
+              ],
+            ))
+          ],
         ));
   }
 }
