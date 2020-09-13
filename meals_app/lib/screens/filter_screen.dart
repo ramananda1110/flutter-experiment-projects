@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:meals_app/dummy_data.dart';
 
 class FilterScreen extends StatefulWidget {
+  final Function saveFilters;
+
+  FilterScreen(this.saveFilters);
+
   static const routName = './meals-filter-screen';
 
   @override
@@ -28,7 +32,10 @@ class _FilterScreenState extends State<FilterScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Filter'),
+          title: Text('Your Filter'),
+          actions: [
+            IconButton(icon: Icon(Icons.save), onPressed: widget.saveFilters)
+          ],
         ),
         body: Column(
           children: [
