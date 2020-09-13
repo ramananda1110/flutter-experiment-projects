@@ -19,7 +19,7 @@ class ProductItems extends StatelessWidget {
               MaterialPageRoute(builder: (ctx) => ProductDetailsScreen(title)),
             );*/
             Navigator.of(context)
-                .pushNamed(ProductDetailsScreen.routeName, arguments: title);
+                .pushNamed(ProductDetailsScreen.routeName, arguments: id);
           },
           child: Image.network(
             imageUrl,
