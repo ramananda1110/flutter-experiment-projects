@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:my_shop/widgets/prduct_item.dart';
-import 'package:my_shop/widgets/products_grid.dart';
 import '../models/product.dart';
 
-class ProductOverviewScreen extends StatelessWidget {
-  final List<Product> loadedProducts = [
+class Products with ChangeNotifier {
+  List<Product> _items = [
     Product(
       id: 'p1',
       title: 'Red Shirt',
@@ -39,13 +37,12 @@ class ProductOverviewScreen extends StatelessWidget {
     ),
   ];
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('My shop'),
-      ),
-      body: ProductsGrid(),
-    );
+  List<Product> get items {
+    return [..._items];
+  }
+
+  void addProduct() {
+    // _items.add(value);
+    notifyListeners();
   }
 }
