@@ -13,7 +13,9 @@ class ProductItems extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final product = Provider.of<Product>(context);
+    final product = Provider.of<Product>(context, listen: false);
+
+    print('re-build product');
 
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
@@ -21,8 +23,8 @@ class ProductItems extends StatelessWidget {
         child: GestureDetector(
           onTap: () {
             /* Navigator.of(context).push(
-              MaterialPageRoute(builder: (ctx) => ProductDetailsScreen(title)),
-            );*/
+                MaterialPageRoute(builder: (ctx) => ProductDetailsScreen(title)),
+              );*/
             Navigator.of(context).pushNamed(ProductDetailsScreen.routeName,
                 arguments: product.id);
           },
@@ -33,14 +35,16 @@ class ProductItems extends StatelessWidget {
         ),
         footer: GridTileBar(
           backgroundColor: Colors.black54,
-          leading: IconButton(
-            icon: Icon(
-              product.isFavorite ? Icons.favorite : Icons.favorite_border,
-              color: Theme.of(context).accentColor,
+          leading: Consumer<Product>(
+            builder: (ctx, product, child) => IconButton(
+              icon: Icon(
+                product.isFavorite ? Icons.favorite : Icons.favorite_border,
+                color: Theme.of(context).accentColor,
+              ),
+              onPressed: () {
+                product.toggleFavoriteStatus();
+              },
             ),
-            onPressed: () {
-              product.toggleFavoriteStatus();
-            },
           ),
           title: Text(
             product.title,
