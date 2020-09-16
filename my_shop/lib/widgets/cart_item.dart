@@ -40,9 +40,9 @@ class CartItem extends StatelessWidget {
             leading: CircleAvatar(
               child: Padding(
                   padding: EdgeInsets.all(5),
-                  child: FittedBox(child: Text('\$$price'))),
+                  child: FittedBox(child: Text('\৳$price'))),
             ),
-            title: Text('Total: \$${(price * quantity)}'),
+            title: Text('Total: \৳${(price * quantity)}'),
             trailing: Text('$quantity x'),
           ),
         ),

@@ -33,7 +33,7 @@ class CartScreen extends StatelessWidget {
                   ),
                   Spacer(),
                   Chip(
-                    label: Text('\$${cart.totalAmount}'),
+                    label: Text('\৳${cart.totalAmount}'),
                     backgroundColor: Theme.of(context).primaryColor,
                   ),
                   FlatButton(
