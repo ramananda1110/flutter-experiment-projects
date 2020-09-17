@@ -17,11 +17,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
   final _form = GlobalKey<FormState>();
 
   var _editProduct =
-  Product(id: null,
-      title: '',
-      description: '',
-      imageUrl: '',
-      price: 0);
+      Product(id: null, title: '', description: '', imageUrl: '', price: 0);
 
   @override
   void dispose() {
@@ -47,8 +43,10 @@ class _EditProductScreenState extends State<EditProductScreen> {
   }
 
   void _saveForm() {
-    _form.currentState.save();
-    print(_editProduct.description);
+    final isValid = _form.currentState.validate();
+    if (isValid) {
+      _form.currentState.save();
+    }
   }
 
   @override
@@ -56,9 +54,11 @@ class _EditProductScreenState extends State<EditProductScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Edit product'),
-        actions: [IconButton(icon: const Icon(Icons.save), onPressed: () =>
-            _saveForm(),
-        )
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.save),
+            onPressed: () => _saveForm(),
+          )
         ],
       ),
       body: Padding(
@@ -68,13 +68,20 @@ class _EditProductScreenState extends State<EditProductScreen> {
           child: ListView(
             children: [
               TextFormField(
-                decoration: InputDecoration(labelText: 'Title'),
+                decoration: InputDecoration(
+                  labelText: 'Title',
+                ),
                 textInputAction: TextInputAction.next,
                 onFieldSubmitted: (_) {
                   FocusScope.of(context).requestFocus(_priceFocusNote);
                 },
-                onSaved: (value) =>
-                _editProduct = Product(
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return 'Please enter a title';
+                  }
+                  return null;
+                },
+                onSaved: (value) => _editProduct = Product(
                     id: null,
                     title: value,
                     description: _editProduct.description,
@@ -89,8 +96,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                 onFieldSubmitted: (_) {
                   FocusScope.of(context).requestFocus(_descriptionFocusNote);
                 },
-                onSaved: (value) =>
-                _editProduct = Product(
+                onSaved: (value) => _editProduct = Product(
                     id: null,
                     title: _editProduct.title,
                     description: _editProduct.description,
@@ -105,9 +111,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                 onFieldSubmitted: (_) {
                   FocusScope.of(context).requestFocus(_imageUrlFocusNote);
                 },
-
-                onSaved: (value) =>
-                _editProduct = Product(
+                onSaved: (value) => _editProduct = Product(
                     id: null,
                     title: _editProduct.title,
                     description: value,
@@ -126,11 +130,11 @@ class _EditProductScreenState extends State<EditProductScreen> {
                     child: _imageURLController.text.isEmpty
                         ? Text('Enter a URL')
                         : FittedBox(
-                      child: Image.network(
-                        _imageURLController.text,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
+                            child: Image.network(
+                              _imageURLController.text,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
                   ),
                   Expanded(
                     child: TextFormField(
@@ -142,21 +146,20 @@ class _EditProductScreenState extends State<EditProductScreen> {
                         onFieldSubmitted: (_) {
                           _saveForm();
                         },
-
-                        onSaved: (value) =>
-                        _editProduct = Product(
-                          id: null,
-                          title: _editProduct.title,
-                          description: _editProduct.description,
-                          imageUrl: value,
-                          price: _editProduct.price,)
-                    ),
+                        onSaved: (value) => _editProduct = Product(
+                              id: null,
+                              title: _editProduct.title,
+                              description: _editProduct.description,
+                              imageUrl: value,
+                              price: _editProduct.price,
+                            )),
                   ),
                 ],
               )
             ],
           ),
         ),
-      ),);
+      ),
+    );
   }
 }
