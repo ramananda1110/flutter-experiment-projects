@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class EditProductScreen extends StatefulWidget {
   static const routeName = '/edit_product';
@@ -10,13 +11,30 @@ class EditProductScreen extends StatefulWidget {
 class _EditProductScreenState extends State<EditProductScreen> {
   final _priceFocusNote = FocusNode();
   final _descriptionFocusNote = FocusNode();
+  final _imageURLController = TextEditingController();
+  final _imageUrlFocusNote = FocusNode();
 
   @override
   void dispose() {
     // TODO: implement dispose
     _priceFocusNote.dispose();
     _descriptionFocusNote.dispose();
+    _imageURLController.dispose();
+    _imageUrlFocusNote.dispose();
     super.dispose();
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    _imageUrlFocusNote.addListener(_updateImageUrl);
+    super.initState();
+  }
+
+  void _updateImageUrl() {
+    if (!_imageUrlFocusNote.hasFocus) {
+      setState(() {});
+    }
   }
 
   @override
@@ -51,7 +69,39 @@ class _EditProductScreenState extends State<EditProductScreen> {
                 maxLines: 3,
                 keyboardType: TextInputType.multiline,
                 focusNode: _descriptionFocusNote,
+                onFieldSubmitted: (_) {
+                  FocusScope.of(context).requestFocus(_imageUrlFocusNote);
+                },
               ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Container(
+                    width: 100,
+                    height: 100,
+                    margin: EdgeInsets.only(top: 10, right: 10),
+                    decoration: BoxDecoration(
+                        border: Border.all(width: 1, color: Colors.grey)),
+                    child: _imageURLController.text.isEmpty
+                        ? Text('Enter a URL')
+                        : FittedBox(
+                            child: Image.network(
+                              _imageURLController.text,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                  ),
+                  Expanded(
+                    child: TextFormField(
+                      focusNode: _imageUrlFocusNote,
+                      decoration: InputDecoration(labelText: 'Image URL'),
+                      keyboardType: TextInputType.url,
+                      textInputAction: TextInputAction.done,
+                      controller: _imageURLController,
+                    ),
+                  ),
+                ],
+              )
             ],
           ),
         ),
