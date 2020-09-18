@@ -107,4 +107,9 @@ class Products with ChangeNotifier {
     // _items.insert(0, newProduct); at the start of the list
     notifyListeners();
   }
+
+  void deleteProduct(String id) {
+    _items.removeWhere((pod) => pod.id == id);
+    notifyListeners();
+  }
 }
