@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../providers/product.dart';
+import '../providers/products.dart';
 import '../screens/product_details_screen.dart';
 import '../providers/cart.dart';
 
-class ProductItems extends StatelessWidget {
+class ProductItemList extends StatelessWidget {
   /*
   final String id;
   final String title;
@@ -14,7 +14,7 @@ class ProductItems extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final product = Provider.of<Product>(context, listen: false);
+    final product = Provider.of<ProductItem>(context, listen: false);
     final cart = Provider.of<Cart>(context, listen: false);
 
     print('re-build product');
@@ -37,7 +37,7 @@ class ProductItems extends StatelessWidget {
         ),
         footer: GridTileBar(
           backgroundColor: Colors.black54,
-          leading: Consumer<Product>(
+          leading: Consumer<ProductItem>(
             builder: (ctx, product, child) => IconButton(
               icon: Icon(
                 product.isFavorite ? Icons.favorite : Icons.favorite_border,

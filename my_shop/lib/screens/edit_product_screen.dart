@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../providers/product.dart';
-import '../providers/products.dart';
 import 'package:provider/provider.dart';
+
+import '../providers/products.dart';
 
 class EditProductScreen extends StatefulWidget {
   static const routeName = '/edit_product';
@@ -19,10 +19,10 @@ class _EditProductScreenState extends State<EditProductScreen> {
   final _form = GlobalKey<FormState>();
 
   var isInit = true;
-  var appBarTitle ='Add product';
+  var appBarTitle = 'Add product';
 
   var _editProduct =
-      Product(id: null, title: '', description: '', imageUrl: '', price: 0);
+      ProductItem(id: null, title: '', description: '', imageUrl: '', price: 0);
 
   var _initValue = {
     'title': '',
@@ -54,7 +54,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
 
       if (productId != null) {
         _editProduct =
-            Provider.of<Products>(context, listen: false).findById(productId);
+            Provider.of<Product>(context, listen: false).findById(productId);
 
         _initValue = {
           'title': _editProduct.title,
@@ -96,10 +96,10 @@ class _EditProductScreenState extends State<EditProductScreen> {
     _form.currentState.save();
 
     if (_editProduct.id != null) {
-      Provider.of<Products>(context, listen: false)
+      Provider.of<Product>(context, listen: false)
           .updateProduct(_editProduct.id, _editProduct);
     } else {
-      Provider.of<Products>(context, listen: false).addProduct(_editProduct);
+      Provider.of<Product>(context, listen: false).addProduct(_editProduct);
     }
     Navigator.of(context).pop();
   }
@@ -137,7 +137,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                   }
                   return null;
                 },
-                onSaved: (value) => _editProduct = Product(
+                onSaved: (value) => _editProduct = ProductItem(
                     id: _editProduct.id,
                     isFavorite: _editProduct.isFavorite,
                     title: value,
@@ -154,7 +154,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                 onFieldSubmitted: (_) {
                   FocusScope.of(context).requestFocus(_descriptionFocusNote);
                 },
-                onSaved: (value) => _editProduct = Product(
+                onSaved: (value) => _editProduct = ProductItem(
                     id: _editProduct.id,
                     isFavorite: _editProduct.isFavorite,
                     title: _editProduct.title,
@@ -189,7 +189,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                   }
                   return null;
                 },
-                onSaved: (value) => _editProduct = Product(
+                onSaved: (value) => _editProduct = ProductItem(
                     id: _editProduct.id,
                     isFavorite: _editProduct.isFavorite,
                     title: _editProduct.title,
@@ -238,7 +238,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                           }
                           return null;
                         },
-                        onSaved: (value) => _editProduct = Product(
+                        onSaved: (value) => _editProduct = ProductItem(
                               id: _editProduct.id,
                               isFavorite: _editProduct.isFavorite,
                               title: _editProduct.title,
