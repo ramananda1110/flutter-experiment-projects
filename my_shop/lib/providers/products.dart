@@ -94,4 +94,17 @@ class Products with ChangeNotifier {
     // _items.insert(0, newProduct); at the start of the list
     notifyListeners();
   }
+
+  void updateProduct(String id, Product newProduct) {
+    final productIndex = _items.indexWhere((pod) => pod.id == id);
+    if (productIndex >= 0) {
+      _items[productIndex] = newProduct;
+      notifyListeners();
+    } else {
+      print('don\'t have an id');
+    }
+
+    // _items.insert(0, newProduct); at the start of the list
+    notifyListeners();
+  }
 }

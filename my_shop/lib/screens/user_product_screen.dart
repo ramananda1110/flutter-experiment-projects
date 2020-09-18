@@ -16,16 +16,26 @@ class UserProductScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Your Products'),
-        actions: [IconButton(icon: const Icon(Icons.add), onPressed: () =>
-            Navigator.of(context).pushNamed(EditProductScreen.routeName),
-        )
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.add),
+            onPressed: () =>
+                Navigator.of(context).pushNamed(EditProductScreen.routeName),
+          )
         ],
       ),
       drawer: AppDrawer(),
       body: ListView.builder(
-        itemBuilder: (ctx, index) =>
-            UserProductItem(title: productData.items[index].title,
-              imageUrl: productData.items[index].imageUrl,),
+        itemBuilder: (ctx, index) => Column(
+          children: [
+            UserProductItem(
+              id: productData.items[index].id,
+              title: productData.items[index].title,
+              imageUrl: productData.items[index].imageUrl,
+            ),
+            Divider(),
+          ],
+        ),
         itemCount: productData.items.length,
       ),
     );
