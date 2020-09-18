@@ -3,12 +3,12 @@ import 'package:my_shop/providers/products.dart';
 import 'package:my_shop/screens/edit_product_screen.dart';
 import 'package:provider/provider.dart';
 
-class UserProductItem extends StatelessWidget {
+class UserProductItemList extends StatelessWidget {
   final String title;
   final String imageUrl;
   final String id;
 
-  UserProductItem({this.id, this.title, this.imageUrl});
+  UserProductItemList({this.id, this.title, this.imageUrl});
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +46,7 @@ class UserProductItem extends StatelessWidget {
                                 child: Text('No')),
                             FlatButton(
                                 onPressed: () => {
-                                      Provider.of<Products>(context,
+                                      Provider.of<Product>(context,
                                               listen: false)
                                           .deleteProduct(id),
                                   Navigator.of(context).pop(false),

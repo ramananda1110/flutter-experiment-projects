@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:my_shop/providers/products.dart';
-import 'package:my_shop/widgets/user_product_item.dart';
 import 'package:provider/provider.dart';
 
 import '../widgets/app_drawer.dart';
+import '../widgets/user_product_item.dart';
 import 'edit_product_screen.dart';
 
 class UserProductScreen extends StatelessWidget {
@@ -11,7 +11,7 @@ class UserProductScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final productData = Provider.of<Products>(context);
+    final productData = Provider.of<Product>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -28,7 +28,7 @@ class UserProductScreen extends StatelessWidget {
       body: ListView.builder(
         itemBuilder: (ctx, index) => Column(
           children: [
-            UserProductItem(
+            UserProductItemList(
               id: productData.items[index].id,
               title: productData.items[index].title,
               imageUrl: productData.items[index].imageUrl,

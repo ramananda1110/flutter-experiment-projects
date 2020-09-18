@@ -1,9 +1,30 @@
 import 'package:flutter/material.dart';
-import 'product.dart';
 
-class Products with ChangeNotifier {
-  List<Product> _items = [
-    Product(
+class ProductItem with ChangeNotifier {
+  final String id;
+  final String title;
+  final String description;
+  final String imageUrl;
+  final double price;
+  bool isFavorite;
+
+  ProductItem(
+      {@required this.id,
+      @required this.title,
+      @required this.description,
+      @required this.imageUrl,
+      @required this.price,
+      this.isFavorite = false});
+
+  void toggleFavoriteStatus() {
+    isFavorite = !isFavorite;
+    notifyListeners();
+  }
+}
+
+class Product with ChangeNotifier {
+  List<ProductItem> _items = [
+    ProductItem(
       id: 'p1',
       title: 'Red Shirt',
       description: 'A red shirt - it is pretty red!',
@@ -11,7 +32,7 @@ class Products with ChangeNotifier {
       imageUrl:
           'https://cdn.pixabay.com/photo/2016/10/02/22/17/red-t-shirt-1710578_1280.jpg',
     ),
-    Product(
+    ProductItem(
       id: 'p2',
       title: 'Trousers',
       description: 'A nice pair of trousers.',
@@ -19,7 +40,7 @@ class Products with ChangeNotifier {
       imageUrl:
           'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Trousers%2C_dress_%28AM_1960.022-8%29.jpg/512px-Trousers%2C_dress_%28AM_1960.022-8%29.jpg',
     ),
-    Product(
+    ProductItem(
       id: 'p3',
       title: 'Yellow Scarf',
       description: 'Warm and cozy - exactly what you need for the winter.',
@@ -27,7 +48,7 @@ class Products with ChangeNotifier {
       imageUrl:
           'https://live.staticflickr.com/4043/4438260868_cc79b3369d_z.jpg',
     ),
-    Product(
+    ProductItem(
       id: 'p4',
       title: 'A Pan',
       description: 'Prepare any meal you want.',
@@ -35,7 +56,7 @@ class Products with ChangeNotifier {
       imageUrl:
           'https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Cast-Iron-Pan.jpg/1024px-Cast-Iron-Pan.jpg',
     ),
-    Product(
+    ProductItem(
       id: 'p5',
       title: 'T shirt',
       description: 'Prepare any meal you want.',
@@ -43,7 +64,7 @@ class Products with ChangeNotifier {
       imageUrl:
           'https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Ambigram_Ideal%2C_polysymmetrical_logo_printed_on_a_green_T-shirt.jpg/1920px-Ambigram_Ideal%2C_polysymmetrical_logo_printed_on_a_green_T-shirt.jpg',
     ),
-    Product(
+    ProductItem(
       id: 'p6',
       title: 'Watch',
       description: 'Prepare any meal you want.',
@@ -55,7 +76,7 @@ class Products with ChangeNotifier {
 
   //var _showFavoriteOnly = false;
 
-  List<Product> get items {
+  List<ProductItem> get items {
     /*if (_showFavoriteOnly) {
       return _items
           .where((productItem) => productItem == _showFavoriteOnly)
@@ -64,7 +85,7 @@ class Products with ChangeNotifier {
     return [..._items];
   }
 
-  List<Product> get favoriteItems {
+  List<ProductItem> get favoriteItems {
     return _items.where((items) => items.isFavorite).toList();
   }
 
@@ -78,12 +99,12 @@ class Products with ChangeNotifier {
     notifyListeners();
   }*/
 
-  Product findById(String productId) {
+  ProductItem findById(String productId) {
     return _items.firstWhere((element) => element.id == productId);
   }
 
-  void addProduct(Product product) {
-    final newProduct = Product(
+  void addProduct(ProductItem product) {
+    final newProduct = ProductItem(
         id: DateTime.now().toString(),
         title: product.title,
         description: product.description,
@@ -95,7 +116,7 @@ class Products with ChangeNotifier {
     notifyListeners();
   }
 
-  void updateProduct(String id, Product newProduct) {
+  void updateProduct(String id, ProductItem newProduct) {
     final productIndex = _items.indexWhere((pod) => pod.id == id);
     if (productIndex >= 0) {
       _items[productIndex] = newProduct;

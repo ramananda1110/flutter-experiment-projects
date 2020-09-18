@@ -5,16 +5,16 @@ import 'package:intl/intl.dart';
 
 import '../providers/orders.dart';
 
-class OrderItemRow extends StatefulWidget {
+class OrderItemList extends StatefulWidget {
   final OrderItem order;
 
-  OrderItemRow({this.order});
+  OrderItemList({this.order});
 
   @override
-  _OrderItemRowState createState() => _OrderItemRowState();
+  _OrderItemListState createState() => _OrderItemListState();
 }
 
-class _OrderItemRowState extends State<OrderItemRow> {
+class _OrderItemListState extends State<OrderItemList> {
   var _expended = false;
 
   @override

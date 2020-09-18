@@ -3,14 +3,14 @@ import 'package:provider/provider.dart';
 
 import '../providers/cart.dart';
 
-class CartItem extends StatelessWidget {
+class CartItemList extends StatelessWidget {
   final String id;
   final double price;
   final int quantity;
   final String title;
   final String productId;
 
-  CartItem({this.id, this.price, this.quantity, this.title, this.productId});
+  CartItemList({this.id, this.price, this.quantity, this.title, this.productId});
 
   @override
   Widget build(BuildContext context) {
