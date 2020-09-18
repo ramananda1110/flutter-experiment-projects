@@ -107,7 +107,7 @@ class Product with ChangeNotifier {
   }
 
   void addProduct(ProductItem product) {
-    const url = 'https://my-shop-d8241.firebaseio.com/products';
+    const url = 'https://my-shop-d8241.firebaseio.com/products.json';
 
     http.post(
       url,
