@@ -27,7 +27,7 @@ class ProductItem with ChangeNotifier {
 
 class Product with ChangeNotifier {
   List<ProductItem> _items = [
-    ProductItem(
+    /*ProductItem(
       id: 'p1',
       title: 'Red Shirt',
       description: 'A red shirt - it is pretty red!',
@@ -74,7 +74,7 @@ class Product with ChangeNotifier {
       price: 2050,
       imageUrl:
           'https://upload.wikimedia.org/wikipedia/commons/7/7a/Image-Greubel_Forsey_Tourbillon_24_Secondes_Incline.jpg',
-    ),
+    ),*/
   ];
 
   //var _showFavoriteOnly = false;
@@ -111,7 +111,24 @@ class Product with ChangeNotifier {
 
     try {
       final response = await http.get(url);
-      print('get fetch response ${json.decode(response.body)}');
+
+      final extractData = json.decode(response.body) as Map<String, dynamic>;
+
+      final List<ProductItem> loadedProduct = [];
+
+      extractData.forEach((prodId, prodData) {
+        loadedProduct.add(ProductItem(
+            id: prodId,
+            title: prodData['title'],
+            description: prodData['description'],
+            imageUrl: prodData['imageUrl'],
+            price: prodData['price'],
+            isFavorite: prodData['isFavorite']));
+
+        _items = loadedProduct;
+
+        notifyListeners();
+      });
     } catch (error) {
       throw error;
     }
