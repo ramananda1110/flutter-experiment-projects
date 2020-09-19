@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:my_shop/providers/products.dart';
-import 'package:my_shop/screens/edit_product_screen.dart';
 import 'package:provider/provider.dart';
+
+import '../providers/products.dart';
+import '../screens/edit_product_screen.dart';
 
 class UserProductItemList extends StatelessWidget {
   final String title;
@@ -24,8 +25,9 @@ class UserProductItemList extends StatelessWidget {
             IconButton(
               icon: Icon(Icons.edit),
               onPressed: () {
-                Navigator.of(context)
-                    .pushNamed(EditProductScreen.routeName, arguments: id);
+                Navigator.of(
+                  context,
+                ).pushNamed(EditProductScreen.routeName, arguments: id);
               },
               color: Theme.of(context).primaryColor,
             ),
@@ -36,8 +38,7 @@ class UserProductItemList extends StatelessWidget {
                     context: context,
                     builder: (ctx) => AlertDialog(
                           title: Text('Are you sure?'),
-                          content: Text(
-                              'Do you want to remove the item?'),
+                          content: Text('Do you want to remove the item?'),
                           actions: [
                             FlatButton(
                                 onPressed: () => {
@@ -49,9 +50,8 @@ class UserProductItemList extends StatelessWidget {
                                       Provider.of<Product>(context,
                                               listen: false)
                                           .deleteProduct(id),
-                                  Navigator.of(context).pop(false),
-
-                                },
+                                      Navigator.of(context).pop(false),
+                                    },
                                 child: Text('Yes')),
                           ],
                         ));

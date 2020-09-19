@@ -127,6 +127,8 @@ class Product with ChangeNotifier {
 
         _items = loadedProduct;
 
+        print('dataloaded $prodId');
+
         notifyListeners();
       });
     } catch (error) {
