@@ -13,6 +13,8 @@ class UserProductItemList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scaffold = Scaffold.of(context);
+
     return ListTile(
       title: Text(title),
       leading: CircleAvatar(
@@ -33,28 +35,17 @@ class UserProductItemList extends StatelessWidget {
             ),
             IconButton(
               icon: Icon(Icons.delete),
-              onPressed: () {
-                return showDialog(
-                    context: context,
-                    builder: (ctx) => AlertDialog(
-                          title: Text('Are you sure?'),
-                          content: Text('Do you want to remove the item?'),
-                          actions: [
-                            FlatButton(
-                                onPressed: () => {
-                                      Navigator.of(context).pop(false),
-                                    },
-                                child: Text('No')),
-                            FlatButton(
-                                onPressed: () => {
-                                      Provider.of<Product>(context,
-                                              listen: false)
-                                          .deleteProduct(id),
-                                      Navigator.of(context).pop(false),
-                                    },
-                                child: Text('Yes')),
-                          ],
-                        ));
+              onPressed: () async {
+                try {
+                  await Provider.of<Product>(context, listen: false)
+                      .deleteProduct(id);
+                } catch (error) {
+                  return scaffold.showSnackBar(SnackBar(
+                      content: Text(
+                    'Deleting failed!',
+                    textAlign: TextAlign.center,
+                  )));
+                }
               },
               color: Theme.of(context).errorColor,
             ),
