@@ -165,9 +165,20 @@ class Product with ChangeNotifier {
     }
   }
 
-  void updateProduct(String id, ProductItem newProduct) {
+  Future<void> updateProduct(String id, ProductItem newProduct) async {
     final productIndex = _items.indexWhere((pod) => pod.id == id);
     if (productIndex >= 0) {
+      final url = 'https://my-shop-d8241.firebaseio.com/products/$id.json';
+
+      await http.patch(url,
+          body: json.encode({
+            'title': newProduct.title,
+            'description': newProduct.description,
+            'imageUrl': newProduct.imageUrl,
+            'price': newProduct.price,
+            'isFavorite': newProduct.isFavorite,
+          }));
+
       _items[productIndex] = newProduct;
       notifyListeners();
     } else {
@@ -175,11 +186,31 @@ class Product with ChangeNotifier {
     }
 
     // _items.insert(0, newProduct); at the start of the list
-    notifyListeners();
   }
 
   void deleteProduct(String id) {
-    _items.removeWhere((pod) => pod.id == id);
-    notifyListeners();
+    final url = 'https://my-shop-d8241.firebaseio.com/products/$id.json';
+
+    final existingProdIndex = _items.indexWhere((pod) => pod.id == id);
+
+    var existingProd = _items[existingProdIndex];
+
+    http
+        .delete(url)
+        .then((response) => {
+              if (response.statusCode >= 400) {
+                throw Exception()
+              }
+              //existingProd = null
+            })
+        .catchError((error) {
+      _items.insert(existingProdIndex, existingProd);
+      notifyListeners();
+    });
+
+    print('exit index $existingProdIndex');
+    print('current ${existingProd.title}');
+
+    //notifyListeners();
   }
 }
