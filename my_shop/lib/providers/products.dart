@@ -21,8 +21,29 @@ class ProductItem with ChangeNotifier {
       @required this.price,
       this.isFavorite = false});
 
-  void toggleFavoriteStatus() {
+  void toggleFavoriteStatus() async {
+    final oldStatus = isFavorite;
     isFavorite = !isFavorite;
+    notifyListeners();
+
+    final url = 'https://my-shop-d8241.firebaseio.com/products/$id.json';
+
+    try {
+      final response = await http.patch(url,
+          body: json.encode({
+            'isFavorite': isFavorite,
+          }));
+
+      if (response.statusCode >= 400) {
+        setFavoriteValue(oldStatus);
+      }
+    } catch (error) {
+      setFavoriteValue(oldStatus);
+    }
+  }
+
+  void setFavoriteValue(bool newValue) {
+    isFavorite = newValue;
     notifyListeners();
   }
 }
