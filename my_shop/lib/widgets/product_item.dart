@@ -50,7 +50,7 @@ class ProductItemList extends StatelessWidget {
           ),
           title: Text(
             product.title,
-            textAlign: TextAlign.center,
+            textAlign: TextAlign.left,
             style: TextStyle(fontSize: 12),
           ),
           trailing: IconButton(
