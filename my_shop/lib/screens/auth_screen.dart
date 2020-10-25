@@ -1,9 +1,10 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:my_shop/model/HttpException.dart';
 import 'package:provider/provider.dart';
 
+import '../model/HttpException.dart';
+import '../providers/auth.dart';
 
 enum AuthMode { Signup, Login }
 
@@ -107,17 +108,17 @@ class _AuthCardState extends State<AuthCard> {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-            title: Text('An Error Occurred!'),
-            content: Text(message),
-            actions: <Widget>[
-              FlatButton(
-                child: Text('Okay'),
-                onPressed: () {
-                  Navigator.of(ctx).pop();
-                },
-              )
-            ],
-          ),
+        title: Text('An Error Occurred!'),
+        content: Text(message),
+        actions: <Widget>[
+          FlatButton(
+            child: Text('Okay'),
+            onPressed: () {
+              Navigator.of(ctx).pop();
+            },
+          )
+        ],
+      ),
     );
   }
 
@@ -131,19 +132,19 @@ class _AuthCardState extends State<AuthCard> {
       _isLoading = true;
     });
     try {
-      /*if (_authMode == AuthMode.Login) {
+      if (_authMode == AuthMode.Login) {
         // Log user in
-        await Provider.of<Auth>(context, listen: false).login(
+        /*await Provider.of<Auth>(context, listen: false).login(
           _authData['email'],
           _authData['password'],
-        );
+        );*/
       } else {
         // Sign user up
         await Provider.of<Auth>(context, listen: false).signup(
           _authData['email'],
           _authData['password'],
         );
-      }*/
+      }
     } on HttpException catch (error) {
       var errorMessage = 'Authentication failed';
       if (error.toString().contains('EMAIL_EXISTS')) {
