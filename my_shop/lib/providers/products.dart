@@ -49,6 +49,10 @@ class ProductItem with ChangeNotifier {
 }
 
 class Product with ChangeNotifier {
+  final String authToken;
+
+  Product(this.authToken, this._items);
+
   List<ProductItem> _items = [
     /*ProductItem(
       id: 'p1',
@@ -130,7 +134,8 @@ class Product with ChangeNotifier {
   }
 
   Future<void> fetchAndSetProducts() async {
-    const url = 'https://my-shop-d8241.firebaseio.com/products.json';
+    final url =
+        'https://my-shop-d8241.firebaseio.com/products.json?auth=$authToken';
 
     try {
       final response = await http.get(url);
@@ -151,8 +156,6 @@ class Product with ChangeNotifier {
             isFavorite: prodData['isFavorite']));
 
         _items = loadedProduct;
-
-        print('dataloaded $prodId');
 
         notifyListeners();
       });
