@@ -22,6 +22,11 @@ class Auth with ChangeNotifier {
     return null;
   }
 
+
+  String get userId {
+    return _userId;
+  }
+
   Future<void> signUp(String email, String password) async {
     final url =
         'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAM2g6BkEhOkEdjSC8M08yvpFRUhA8SL7s';
