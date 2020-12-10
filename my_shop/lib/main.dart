@@ -21,6 +21,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+
     return MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (ctx) => Auth()),
@@ -31,11 +32,12 @@ class MyApp extends StatelessWidget {
                 previousProduct == null ? [] : previousProduct.items),
           ),
           ChangeNotifierProvider(create: (ctx) => Cart()),
+
           // ignore: missing_required_param
           ChangeNotifierProxyProvider<Auth, Orders>(
-              // ignore: deprecated_member_use
-              builder: (ctx, auth, previousOrder) => Orders(auth.token,
-                  previousOrder == null ? [] : previousOrder.orders)),
+            builder: (ctx, auth, previousOrder) => Orders(auth.token,
+                previousOrder == null ? [] : previousOrder.orders),
+          )
         ],
         child: Consumer<Auth>(
           builder: (ctx, auth, _) => MaterialApp(

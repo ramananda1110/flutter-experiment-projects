@@ -21,12 +21,12 @@ class ProductItem with ChangeNotifier {
       @required this.price,
       this.isFavorite = false});
 
-  void toggleFavoriteStatus(String authToken) async {
+  void toggleFavoriteStatus(String authToken, String userId) async {
     final oldStatus = isFavorite;
     isFavorite = !isFavorite;
     notifyListeners();
 
-    final url = 'https://my-shop-d8241.firebaseio.com/products/$id.json?auth=$authToken';
+    final url = 'https://my-shop-d8241.firebaseio.com/userFavorites/$userId/$id.json?auth=$authToken';
 
     try {
       final response = await http.patch(url,
@@ -49,6 +49,7 @@ class ProductItem with ChangeNotifier {
 }
 
 class Product with ChangeNotifier {
+
   final String authToken;
 
   Product(this.authToken, this._items);
@@ -165,8 +166,7 @@ class Product with ChangeNotifier {
   }
 
   Future<void> addProduct(ProductItem product) async {
-    final url =
-        'https://my-shop-d8241.firebaseio.com/products.json?auth=$authToken';
+    const url = 'https://my-shop-d8241.firebaseio.com/products.json';
 
     try {
       final response = await http.post(url,
@@ -197,8 +197,7 @@ class Product with ChangeNotifier {
   Future<void> updateProduct(String id, ProductItem newProduct) async {
     final productIndex = _items.indexWhere((pod) => pod.id == id);
     if (productIndex >= 0) {
-      final url =
-          'https://my-shop-d8241.firebaseio.com/products/$id.json?auth=$authToken';
+      final url = 'https://my-shop-d8241.firebaseio.com/products/$id.json';
 
       await http.patch(url,
           body: json.encode({
@@ -219,8 +218,7 @@ class Product with ChangeNotifier {
   }
 
   void deleteProduct(String id) async {
-    final url =
-        'https://my-shop-d8241.firebaseio.com/products/$id.json?auth=$authToken';
+    final url = 'https://my-shop-d8241.firebaseio.com/products/$id.json';
 
     final existingProdIndex = _items.indexWhere((pod) => pod.id == id);
     var existingProd = _items[existingProdIndex];
