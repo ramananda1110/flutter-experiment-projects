@@ -26,7 +26,8 @@ class ProductItem with ChangeNotifier {
     isFavorite = !isFavorite;
     notifyListeners();
 
-    final url = 'https://my-shop-d8241.firebaseio.com/userFavorites/$userId/$id.json?auth=$authToken';
+    final url =
+        'https://my-shop-d8241.firebaseio.com/userFavorites/$userId/$id.json?auth=$authToken';
 
     try {
       final response = await http.patch(url,
@@ -49,10 +50,10 @@ class ProductItem with ChangeNotifier {
 }
 
 class Product with ChangeNotifier {
-
   final String authToken;
+  final String userId;
 
-  Product(this.authToken, this._items);
+  Product(this.authToken, this.userId, this._items);
 
   List<ProductItem> _items = [
     /*ProductItem(
@@ -134,9 +135,11 @@ class Product with ChangeNotifier {
     return _items.firstWhere((element) => element.id == productId);
   }
 
-  Future<void> fetchAndSetProducts() async {
+  Future<void> fetchAndSetProducts([filterByUser= false]) async {
+   // var filter = filterByUser?
+
     final url =
-        'https://my-shop-d8241.firebaseio.com/products.json?auth=$authToken';
+        'https://my-shop-d8241.firebaseio.com/products.json?auth=$authToken&orderBy="creatorId"&equalTo="$userId"';
 
     try {
       final response = await http.get(url);
@@ -166,7 +169,8 @@ class Product with ChangeNotifier {
   }
 
   Future<void> addProduct(ProductItem product) async {
-    const url = 'https://my-shop-d8241.firebaseio.com/products.json';
+    final url =
+        'https://my-shop-d8241.firebaseio.com/products.json?auth=$authToken';
 
     try {
       final response = await http.post(url,
@@ -176,6 +180,7 @@ class Product with ChangeNotifier {
             'imageUrl': product.imageUrl,
             'price': product.price,
             'isFavorite': product.isFavorite,
+            'creatorId': userId
           }));
 
       final newProduct = ProductItem(
