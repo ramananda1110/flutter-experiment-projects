@@ -135,11 +135,12 @@ class Product with ChangeNotifier {
     return _items.firstWhere((element) => element.id == productId);
   }
 
-  Future<void> fetchAndSetProducts([filterByUser= false]) async {
-   // var filter = filterByUser?
+  Future<void> fetchAndSetProducts([bool filterByUser = false]) async {
+    var filterString =
+        filterByUser ? 'orderBy="creatorId"&equalTo="$userId"' : '';
 
     final url =
-        'https://my-shop-d8241.firebaseio.com/products.json?auth=$authToken&orderBy="creatorId"&equalTo="$userId"';
+        'https://my-shop-d8241.firebaseio.com/products.json?auth=$authToken&$filterString';
 
     try {
       final response = await http.get(url);
