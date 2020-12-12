@@ -22,7 +22,6 @@ class Auth with ChangeNotifier {
     return null;
   }
 
-
   String get userId {
     return _userId;
   }
@@ -91,5 +90,13 @@ class Auth with ChangeNotifier {
     } catch (error) {
       throw error;
     }
+  }
+
+  void logout() {
+    _userId = null;
+    _token = null;
+    _expiryDate = null;
+
+    notifyListeners();
   }
 }
