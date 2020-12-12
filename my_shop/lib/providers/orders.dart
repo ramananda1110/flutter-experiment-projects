@@ -31,7 +31,7 @@ class Orders with ChangeNotifier {
 
   Future<void> fetchAndSetOrders() async {
     final url =
-        'https://my-shop-d8241.firebaseio.com/orders.json?auth=$authToken';
+        'https://my-shop-d8241.firebaseio.com/orders/$userId.json?auth=$authToken';
 
     try {
       final response = await http.get(url);

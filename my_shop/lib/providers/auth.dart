@@ -5,6 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 
 import '../model/HttpException.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Auth with ChangeNotifier {
   String _token;
@@ -91,9 +92,28 @@ class Auth with ChangeNotifier {
       // auto logout
       _autoLogout();
 
+      /*final sharePref = await SharedPreferences.getInstance();
+
+      final userData = json.encode({
+        'token': _token,
+        'userId': _userId,
+        'expiryDate': _expiryDate.toIso8601String()
+      });
+
+      sharePref.setString("userData", userData);
+*/
+
       notifyListeners();
     } catch (error) {
       throw error;
+    }
+  }
+
+  Future<bool> tryAutoLogin() async {
+    final pref = await SharedPreferences.getInstance();
+
+    if(!pref.containsKey("userData")){
+      return false;
     }
   }
 
@@ -106,6 +126,7 @@ class Auth with ChangeNotifier {
       _authTimer.cancel();
       _authTimer = null;
     }
+
     notifyListeners();
   }
 
