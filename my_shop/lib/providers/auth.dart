@@ -92,7 +92,7 @@ class Auth with ChangeNotifier {
       // auto logout
       _autoLogout();
 
-      /*final sharePref = await SharedPreferences.getInstance();
+      final sharePref = await SharedPreferences.getInstance();
 
       final userData = json.encode({
         'token': _token,
@@ -101,7 +101,7 @@ class Auth with ChangeNotifier {
       });
 
       sharePref.setString("userData", userData);
-*/
+
 
       notifyListeners();
     } catch (error) {
@@ -115,6 +115,26 @@ class Auth with ChangeNotifier {
     if(!pref.containsKey("userData")){
       return false;
     }
+
+    final extractedUserData = json.decode(pref.getString("userData")) as Map<String, Object>;
+
+    final expiryDate = DateTime.parse(extractedUserData['expiryDate']);
+
+    
+    if(expiryDate.isBefore(DateTime.now())){
+      return false;
+    }
+
+    _token = extractedUserData['token'];
+    _userId = extractedUserData['userId'];
+    _expiryDate = expiryDate;
+
+    notifyListeners();
+
+    _autoLogout();
+
+    return true;
+
   }
 
   void logout() {
