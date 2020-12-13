@@ -3,9 +3,9 @@ import 'dart:convert';
 
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../model/HttpException.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class Auth with ChangeNotifier {
   String _token;
@@ -102,7 +102,6 @@ class Auth with ChangeNotifier {
 
       sharePref.setString("userData", userData);
 
-
       notifyListeners();
     } catch (error) {
       throw error;
@@ -112,16 +111,16 @@ class Auth with ChangeNotifier {
   Future<bool> tryAutoLogin() async {
     final pref = await SharedPreferences.getInstance();
 
-    if(!pref.containsKey("userData")){
+    if (!pref.containsKey("userData")) {
       return false;
     }
 
-    final extractedUserData = json.decode(pref.getString("userData")) as Map<String, Object>;
+    final extractedUserData =
+        json.decode(pref.getString("userData")) as Map<String, Object>;
 
     final expiryDate = DateTime.parse(extractedUserData['expiryDate']);
 
-    
-    if(expiryDate.isBefore(DateTime.now())){
+    if (expiryDate.isBefore(DateTime.now())) {
       return false;
     }
 
@@ -134,10 +133,9 @@ class Auth with ChangeNotifier {
     _autoLogout();
 
     return true;
-
   }
 
-  void logout() {
+  Future<void> logout() async {
     _userId = null;
     _token = null;
     _expiryDate = null;
@@ -148,6 +146,12 @@ class Auth with ChangeNotifier {
     }
 
     notifyListeners();
+
+    final pref = await SharedPreferences.getInstance();
+
+    // pref.remove("userData");
+
+    pref.clear();
   }
 
   void _autoLogout() {
