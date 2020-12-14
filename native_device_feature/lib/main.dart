@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:native_device_feature/providers/great_places.dart';
-import 'package:native_device_feature/screens/add_place_screen.dart';
-import 'package:native_device_feature/screens/place_details_screen.dart';
+import './screens/add_place_screen.dart';
+import './screens/places_list_screen.dart';
 import 'package:provider/provider.dart';
 
 void main() {
