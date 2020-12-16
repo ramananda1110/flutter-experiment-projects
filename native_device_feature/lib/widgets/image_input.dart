@@ -7,7 +7,6 @@ import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart' as syspaths;
 
 class ImageInput extends StatefulWidget {
-
   final Function onSelectImage;
 
   ImageInput(this.onSelectImage);
@@ -19,7 +18,7 @@ class ImageInput extends StatefulWidget {
 class _ImageInputState extends State<ImageInput> {
   File _storedImage;
 
-  Future<Void> _takePicture() async {
+  Future<void> _takePicture() async {
     final imageFile =
         await ImagePicker.pickImage(source: ImageSource.camera, maxWidth: 600);
     //file type
@@ -28,6 +27,9 @@ class _ImageInputState extends State<ImageInput> {
 
     //final imageFile = await picker.getImage(source: ImageSource.camera, maxWidth: 600);
 
+    if (imageFile == null) {
+      return;
+    }
     setState(() {
       _storedImage = imageFile;
     });
