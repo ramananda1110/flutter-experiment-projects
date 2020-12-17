@@ -44,7 +44,7 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
             Expanded(
                 child: SingleChildScrollView(
               child: Padding(
-                padding: EdgeInsets.all(10),
+                padding: EdgeInsets.all(20),
                 child: Column(
                   children: [
                     TextField(
@@ -53,8 +53,8 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
                     ),
                     SizedBox(height: 10),
                     ImageInput(_selectedImage),
-                    SizedBox(height: 10),
-                    LocationInput(),
+                   // SizedBox(height: 10),
+                   // LocationInput(),
                   ],
                 ),
               ),
