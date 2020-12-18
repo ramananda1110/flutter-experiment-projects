@@ -1,7 +1,17 @@
 import 'package:chat_app/screen/auth_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 void main() {
+
+
+  runApp(MyApp());
+
+  initFirebase();
+}
+void initFirebase() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
