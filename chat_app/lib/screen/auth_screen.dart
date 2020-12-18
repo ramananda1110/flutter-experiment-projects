@@ -9,12 +9,15 @@ class AuthScreen extends StatefulWidget {
 class _AuthScreenState extends State<AuthScreen> {
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Card(
-        margin: EdgeInsets.all(20),
-        child: Padding(
-          padding: EdgeInsets.all(16),
-          child: AuthForm(),
+    return Scaffold(
+      backgroundColor: Theme.of(context).primaryColor,
+      body: Center(
+        child: Card(
+          margin: EdgeInsets.all(20),
+          child: Padding(
+            padding: EdgeInsets.all(16),
+            child: AuthForm(),
+          ),
         ),
       ),
     );
