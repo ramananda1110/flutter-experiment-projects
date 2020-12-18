@@ -1,5 +1,6 @@
-import '../widget/auth_form.dart';
 import 'package:flutter/material.dart';
+
+import '../widget/auth_form.dart';
 
 class AuthScreen extends StatefulWidget {
   @override
@@ -7,6 +8,8 @@ class AuthScreen extends StatefulWidget {
 }
 
 class _AuthScreenState extends State<AuthScreen> {
+  void _submitAuthForm(String email, String password, String userName, bool isLogin) {}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,7 +19,7 @@ class _AuthScreenState extends State<AuthScreen> {
           margin: EdgeInsets.all(20),
           child: Padding(
             padding: EdgeInsets.all(16),
-            child: AuthForm(),
+            child: AuthForm(_submitAuthForm),
           ),
         ),
       ),
