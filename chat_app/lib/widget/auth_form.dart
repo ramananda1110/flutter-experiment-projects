@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class AuthForm extends StatefulWidget {
-  AuthForm(this.submitFun);
+  AuthForm(this.submitFun, this.isLoading);
+
+  final bool isLoading;
 
   final void Function(String email, String password, String userName,
       bool isLogin, BuildContext ctx) submitFun;
@@ -26,7 +28,8 @@ class _AuthFormState extends State<AuthForm> {
     if (isValid) {
       _formKey.currentState.save();
 
-      widget.submitFun(_userEmail.trim(), _userPassword.trim(), _userName.trim(), _isLogin, context);
+      widget.submitFun(_userEmail.trim(), _userPassword.trim(),
+          _userName.trim(), _isLogin, context);
     }
   }
 
@@ -89,21 +92,24 @@ class _AuthFormState extends State<AuthForm> {
                 SizedBox(
                   height: 12,
                 ),
-                RaisedButton(
-                  onPressed: _trySubmit,
-                  child: Text(_isLogin ? 'Login' : 'Signup'),
-                ),
-                FlatButton(
-                  textColor: Theme.of(context).primaryColor,
-                  onPressed: () {
-                    setState(() {
-                      _isLogin = !_isLogin;
-                    });
-                  },
-                  child: Text(_isLogin
-                      ? 'Create new account'
-                      : 'I already have an account'),
-                )
+                widget.isLoading
+                    ? CircularProgressIndicator()
+                    : RaisedButton(
+                        onPressed: _trySubmit,
+                        child: Text(_isLogin ? 'Login' : 'Signup'),
+                      ),
+                if (!widget.isLoading)
+                  FlatButton(
+                    textColor: Theme.of(context).primaryColor,
+                    onPressed: () {
+                      setState(() {
+                        _isLogin = !_isLogin;
+                      });
+                    },
+                    child: Text(_isLogin
+                        ? 'Create new account'
+                        : 'I already have an account'),
+                  )
               ],
             ),
           ),
