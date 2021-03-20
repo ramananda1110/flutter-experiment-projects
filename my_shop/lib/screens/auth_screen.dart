@@ -44,8 +44,8 @@ class AuthScreen extends StatelessWidget {
                   Flexible(
                     child: Container(
                       margin: EdgeInsets.only(bottom: 20.0),
-                      padding:
-                          EdgeInsets.symmetric(vertical: 8.0, horizontal: 100.0),
+                      padding: EdgeInsets.symmetric(
+                          vertical: 8.0, horizontal: 100.0),
                       transform: Matrix4.rotationZ(-8 * pi / 180)
                         ..translate(-10.0),
                       // ..translate(-10.0),
@@ -128,6 +128,7 @@ class _AuthCardState extends State<AuthCard> {
       return;
     }
     _formKey.currentState.save();
+
     setState(() {
       _isLoading = true;
     });
@@ -163,8 +164,6 @@ class _AuthCardState extends State<AuthCard> {
       const errorMessage =
           'Could not authenticate you. Please try again later.';
       _showErrorDialog(errorMessage);
-
-
     }
 
     setState(() {

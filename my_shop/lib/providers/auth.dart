@@ -45,7 +45,7 @@ class Auth with ChangeNotifier {
 
       final responseData = json.decode(response.body);
 
-      print(responseData);
+     // print(responseData);
 
       if (responseData['error'] != null) {
         throw HttpException(responseData['error']['message']);
@@ -55,6 +55,7 @@ class Auth with ChangeNotifier {
       _userId = responseData['localId'];
       _expiryDate = DateTime.now()
           .add(Duration(seconds: int.parse(responseData['expiresIn'])));
+
 
       notifyListeners();
     } catch (error) {
@@ -78,7 +79,7 @@ class Auth with ChangeNotifier {
 
       final responseData = json.decode(response.body);
 
-      print(responseData);
+     // print(responseData);
 
       if (responseData['error'] != null) {
         throw HttpException(responseData['error']['message']);
