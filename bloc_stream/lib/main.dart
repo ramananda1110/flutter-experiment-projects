@@ -1,51 +1,28 @@
-import 'package:bloc/bloc.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'logic/cubit/counter_cubit.dart';
+import 'presentation/route/app_route.dart';
 
 void main() {
-
-  /*Stream<int> data = boatStream();
-
-//  print(data);
-
-  data.listen((event) {
-    print('Received boat no. ' + event.toString());
-  });*/
-
-
-  final cubit = CounterCubit();
-
-  print(cubit.state);
-
-  cubit.increment();
-
-  print(cubit.state);
-
-
-  cubit.increment();
-
-  print(cubit.state);
-
-  cubit.decrement();
-  print(cubit.state);
-
-  cubit.increment();
-  cubit.increment();
-  cubit.increment();
-  print(cubit.state);
-
-
+  runApp(MyApp());
 }
 
-Stream<int> boatStream() async* {
-  for (int i = 0; i < 10; i++) {
-    print('SENT boat no. ' + i.toString());
-    await Future.delayed(Duration(seconds: 2));
-    yield i;
+class MyApp extends StatelessWidget {
+  final AppRouter _appRouter = AppRouter();
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider<CounterCubit>(
+      create: (context) => CounterCubit(),
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+        ),
+        onGenerateRoute: _appRouter.onGenerateRoute,
+      ),
+    );
   }
-}
-
-class CounterCubit extends Cubit<int> {
-  CounterCubit() : super(10);
-
-  void increment() => emit(state +1);
-  void decrement() => emit(state -1);
 }
