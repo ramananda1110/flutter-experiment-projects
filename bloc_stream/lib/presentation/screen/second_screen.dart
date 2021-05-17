@@ -20,6 +20,7 @@ class SecondScreen extends StatefulWidget {
 
 class _SecondScreenState extends State<SecondScreen> {
   GlobalKey<ScaffoldState> secondScreenKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -99,8 +100,9 @@ class _SecondScreenState extends State<SecondScreen> {
                   backgroundColor: widget.color,
                   heroTag: Text('${widget.title} 2nd'),
                   onPressed: () {
-                    // BlocProvider.of<CounterCubit>(context).increment();
-                    context.bloc<CounterCubit>().increment();
+                    //BlocProvider.of<CounterCubit>(context).increment();
+                    //context.bloc<CounterCubit>().increment();
+                    context.read()<CounterCubit>().increment();
                   },
                   tooltip: 'Increment',
                   child: Icon(Icons.add),
