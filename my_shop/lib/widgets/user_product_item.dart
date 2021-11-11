@@ -5,6 +5,7 @@ import '../providers/products.dart';
 import '../screens/edit_product_screen.dart';
 
 class UserProductItemList extends StatelessWidget {
+
   final String title;
   final String imageUrl;
   final String id;
@@ -13,6 +14,7 @@ class UserProductItemList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     final scaffold = Scaffold.of(context);
 
     return ListTile(

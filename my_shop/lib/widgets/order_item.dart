@@ -38,7 +38,8 @@ class _OrderItemListState extends State<OrderItemList> {
             ),
           ),
           if (_expended)
-            Container(
+            AnimatedContainer(
+              duration: Duration(milliseconds: 300),
               padding: EdgeInsets.symmetric(horizontal: 15, vertical: 4),
               height: min(widget.order.products.length * 20.0 + 20, 100),
               child: ListView(
